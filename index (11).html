@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  /* Design minimalista: fundo preto e centralização */
+  body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #eee; }
+  button { padding: 20px; font-size: 20px; cursor: pointer; }
+  
+  /* A tela do vídeo (escondida por padrão) */
+  #fundo { 
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.9); 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+  }
+  
+  /* Botão fechar simples */
+  #fechar { color: white; font-size: 30px; cursor: pointer; margin-bottom: 10px; font-family: sans-serif; }
+</style>
+</head>
+<body>
+
+<!-- BOTÃO QUE ABRE -->
+<button onclick="abrirVideo()">ABRIR VÍDEO</button>
+
+<!-- TELA DO VÍDEO -->
+<div id="fundo" onclick="fecharVideo()"> <!-- Clicar fora fecha -->
+  <div id="fechar">X FECHAR</div>
+  <iframe id="player" width="640" height="360" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+</div>
+
+<script>
+  // ============================================
+  //  1. COLE O CÓDIGO DO VÍDEO AQUI EMBAIXO:
+  // ============================================
+  
+  var idDoVideo = "kwt8lwpzgN0"; 
+
+  // ============================================
+  
+  var player = document.getElementById("player");
+  var fundo = document.getElementById("fundo");
+
+  function abrirVideo() {
+    fundo.style.display = "flex";
+    // Monta o link automaticamente corretamente
+    player.src = "https://www.youtube.com/embed/" + idDoVideo + "?autoplay=1";
+  }
+
+  function fecharVideo() {
+    fundo.style.display = "none";
+    player.src = ""; // Limpa o vídeo para parar o som
+  }
+</script>
+
+</body>
+</html>
