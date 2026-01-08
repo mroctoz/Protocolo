@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>PROTOCOLO 8-8 | Edição Élite</title>
+    <title>PROTOCOLO 8-8 | Edição Élite v2.1</title>
     
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -382,6 +382,8 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 18px;
             border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
         }
         
         .progress-header {
@@ -389,6 +391,8 @@
             justify-content: space-between;
             margin-bottom: 15px;
             font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
         }
         
         .progress-bar {
@@ -397,6 +401,7 @@
             border-radius: 5px;
             overflow: hidden;
             position: relative;
+            z-index: 2;
         }
         
         .progress-fill {
@@ -494,7 +499,6 @@
             border-color: var(--primary);
             color: #000;
             box-shadow: 0 0 20px var(--primary-glow);
-            transform: rotate(360deg);
         }
         
         .task-item.locked {
@@ -892,15 +896,30 @@
         .video-frame-container {
             flex: 1;
             width: 100%;
-            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: #000;
+            position: relative;
+            min-height: 0;
+        }
+        
+        .video-frame-container::before {
+            content: '';
+            display: block;
+            padding-top: 56.25%;
         }
         
         .video-frame-container iframe {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             border: none;
+            display: block;
         }
         
         .video-modal-footer {
@@ -1051,6 +1070,16 @@
             color: #ddd;
         }
 
+        /* Botão de vídeo para mobile */
+        .mobile-video-button {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
         /* Dev Mode Indicator */
         .dev-badge {
             position: absolute;
@@ -1118,6 +1147,128 @@
             transition: width 0.5s var(--ease);
         }
 
+        /* --- ANIMAÇÕES ESPECIAIS --- */
+        
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            background: var(--primary);
+            top: 0;
+            opacity: 0;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        .confetti:nth-child(odd) {
+            background: var(--accent);
+        }
+        
+        .confetti:nth-child(even) {
+            background: var(--success);
+        }
+        
+        .confetti:nth-child(3n) {
+            background: var(--danger);
+        }
+        
+        /* Task Complete Animation */
+        .task-complete-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+        }
+        
+        .task-complete-animation .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+        
+        /* Full Day Complete Animation */
+        .full-complete-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998;
+            pointer-events: none;
+            display: none;
+        }
+        
+        .full-complete-animation .celebration-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron';
+            font-size: 4rem;
+            color: var(--primary);
+            text-shadow: 0 0 30px var(--primary-glow);
+            opacity: 0;
+            white-space: nowrap;
+        }
+        
+        .full-complete-animation.active {
+            display: block;
+        }
+        
+        /* Pulse Animation for Completed Task */
+        .pulse-complete {
+            animation: pulseComplete 0.6s var(--ease);
+        }
+        
+        /* Rank Badge */
+        .rank-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--primary), #ffaa00);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        /* Export Button */
+        .export-btn {
+            background: linear-gradient(135deg, #00cc88, #009966);
+            color: #000;
+            border: none;
+            padding: 14px 22px;
+            font-family: 'Rajdhani';
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.4s var(--ease);
+            box-shadow: 0 5px 20px rgba(0, 204, 136, 0.3);
+            text-transform: uppercase;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .export-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 204, 136, 0.5);
+        }
+
         /* Responsive */
         @media (max-width: 1400px) {
             .app-shell {
@@ -1128,6 +1279,10 @@
             
             .panel-right {
                 display: none;
+            }
+            
+            .mobile-video-button {
+                display: block;
             }
         }
         
@@ -1140,8 +1295,9 @@
                 gap: 20px;
             }
             
-            .panel-left, .panel-center {
+            .panel-left, .panel-center, .panel-right {
                 height: auto;
+                order: unset;
             }
             
             .panel-left {
@@ -1152,13 +1308,22 @@
                 order: 1;
             }
             
+            .panel-right {
+                order: 3;
+                display: none;
+            }
+            
+            .mobile-video-button {
+                display: block;
+            }
+            
             .task-grid {
                 grid-template-columns: 1fr;
             }
             
             .content-scroll {
                 height: auto;
-                max-height: 60vh;
+                max-height: none;
             }
         }
         
@@ -1169,16 +1334,20 @@
             
             .header-bar {
                 padding: 0 20px;
-                height: 80px;
+                height: auto;
+                min-height: 80px;
                 flex-direction: column;
                 align-items: flex-start;
-                justify-content: center;
                 gap: 10px;
+                padding-top: 15px;
+                padding-bottom: 15px;
             }
             
             .clock-widget {
                 align-self: flex-end;
-                margin-top: -30px;
+                margin-top: -40px;
+                position: relative;
+                z-index: 2;
             }
             
             .content-scroll {
@@ -1190,7 +1359,42 @@
             }
             
             .modal-box {
-                padding: 30px;
+                padding: 20px;
+            }
+            
+            .video-modal-content {
+                width: 100vw;
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+            
+            .video-modal-header {
+                padding: 15px;
+            }
+            
+            .video-modal-header button {
+                width: 44px;
+                height: 44px;
+                font-size: 1.5rem;
+            }
+            
+            .video-modal-footer {
+                padding: 15px;
+            }
+            
+            .video-modal-footer .btn-gold {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .mobile-video-button {
+                background: linear-gradient(145deg, rgba(255, 51, 51, 0.1), rgba(10, 10, 15, 0.9));
+                border: 1px solid rgba(255, 51, 51, 0.3);
+            }
+            
+            .full-complete-animation .celebration-text {
+                font-size: 2.5rem;
             }
         }
 
@@ -1226,6 +1430,34 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+        
+        /* New Animation Keyframes */
+        @keyframes pulseComplete {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+        
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow); }
+            50% { text-shadow: 0 0 20px var(--primary-glow), 0 0 40px var(--primary-glow), 0 0 60px var(--primary-glow); }
+        }
+        
+        @keyframes progressComplete {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
     </style>
 </head>
 <body>
@@ -1234,10 +1466,19 @@
     <div id="loading-screen" class="loading-screen">
         <i class="fa-solid fa-cube loading-logo"></i>
         <h1 class="text-gold font-display" style="font-size: 3rem; margin-bottom: 10px;">PROTOCOLO 8-8</h1>
-        <p class="font-tech text-muted" style="margin-bottom: 30px;">INICIALIZANDO SISTEMA ÉLITE</p>
+        <p class="font-tech text-muted" style="margin-bottom: 30px;">INICIALIZANDO SISTEMA ÉLITE v2.1</p>
         <div class="loading-bar">
             <div class="loading-fill" id="loading-fill"></div>
         </div>
+    </div>
+
+    <!-- ANIMAÇÕES ESPECIAIS -->
+    <div id="confetti-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></div>
+    
+    <div id="full-complete-animation" class="full-complete-animation">
+        <div class="celebration-text" id="celebration-text-1">DIA PERFEITO!</div>
+        <div class="celebration-text" id="celebration-text-2">EXCELÊNCIA ALCANÇADA!</div>
+        <div class="celebration-text" id="celebration-text-3">MISSÃO CUMPRIDA!</div>
     </div>
 
     <!-- VIDEO MODAL OVERLAY -->
@@ -1258,8 +1499,8 @@
         </div>
     </div>
 
-    <!-- LOGIN OVERLAY -->
-    <div id="login-overlay" class="overlay active">
+    <!-- LOGIN OVERLAY (SÓ APARECE SE NÃO HOUVER USUÁRIO) -->
+    <div id="login-overlay" class="overlay">
         <div class="modal-box">
             <i class="fa-solid fa-cube logo-icon" style="font-size: 4rem; margin-bottom: 25px;"></i>
             <h1 style="font-size: 3rem; margin-bottom: 10px; letter-spacing: 3px;">PROTOCOLO 8-8</h1>
@@ -1310,6 +1551,10 @@
                 <i class="fa-solid fa-rotate-right"></i> INICIAR PRÓXIMO CICLO
             </button>
             
+            <button class="export-btn" onclick="App.exportData()" style="width: 100%; margin-top: 15px;">
+                <i class="fa-solid fa-file-export"></i> EXPORTAR DADOS COMPLETOS
+            </button>
+            
             <p class="font-tech text-dim" style="margin-top: 25px; font-size: 0.9rem;">
                 Próximo ciclo começará em 08 de Março e seguirá por mais 60 dias.
             </p>
@@ -1327,7 +1572,7 @@
                     <i class="fa-solid fa-cube logo-icon"></i>
                     <div>
                         <h2 style="font-size: 1.4rem;">PROTOCOLO</h2>
-                        <span class="font-tech text-gold" style="letter-spacing: 3px; font-size: 1.1rem;">EDIÇÃO ÉLITE</span>
+                        <span class="font-tech text-gold" style="letter-spacing: 3px; font-size: 1.1rem;">EDIÇÃO ÉLITE v2.1</span>
                     </div>
                 </div>
                 
@@ -1336,6 +1581,7 @@
                     <h3 id="display-name">OPERADOR</h3>
                     <div class="font-tech text-muted" id="current-rank">RECRUTA</div>
                     <div class="font-tech text-dim" id="user-streak" style="margin-top: 10px; font-size: 0.85rem;">Sequência: 0 dias</div>
+                    <div class="rank-badge" id="daily-rank-badge" style="display: none;">PERFEITO</div>
                 </div>
 
                 <nav>
@@ -1351,6 +1597,9 @@
                     <button class="menu-btn" onclick="App.showInstructions()">
                         <i class="fa-solid fa-book"></i> MANUAL
                     </button>
+                    <button class="menu-btn" onclick="App.exportData()">
+                        <i class="fa-solid fa-file-export"></i> EXPORTAR DADOS
+                    </button>
                 </nav>
             </div>
 
@@ -1359,7 +1608,7 @@
                     <i class="fa-solid fa-skull"></i> RESET TOTAL
                 </button>
                 <p class="font-tech text-dim" style="font-size: 0.8rem; margin-top: 20px; text-align: center;">
-                    Sistema 8-8 v2.0 • Desenvolvimento Pessoal
+                    Sistema 8-8 v2.1 • Desenvolvimento Pessoal
                 </p>
             </div>
         </aside>
@@ -1380,7 +1629,7 @@
 
             <div class="content-scroll">
                 <!-- Progress Bar -->
-                <div class="progress-container">
+                <div class="progress-container" id="progress-container">
                     <div class="progress-header">
                         <span class="font-tech">PROGRESSO DO DIA</span>
                         <span id="daily-percent" class="font-tech text-gold">0%</span>
@@ -1414,6 +1663,16 @@
                     <div class="font-tech text-dim" style="font-size: 0.8rem; margin-top: 10px; text-align: right;">
                         Salvo automaticamente
                     </div>
+                </div>
+
+                <!-- Botão de Vídeo para Mobile -->
+                <div id="mobile-video-button" class="mobile-video-button">
+                    <button class="btn-gold" onclick="App.openVideo()" style="width: 100%; margin-top: 0;">
+                        <i class="fa-solid fa-play"></i> ASSISTIR BRIEFING DO DIA
+                    </button>
+                    <p class="font-tech text-dim" style="font-size: 0.8rem; margin-top: 10px; text-align: center;">
+                        A visualização completa é obrigatória para completar a missão
+                    </p>
                 </div>
             </div>
         </main>
@@ -1473,7 +1732,7 @@
 
 <script>
 /**
- * PROTOCOLO 8-8 | EDIÇÃO ÉLITE v2.0
+ * PROTOCOLO 8-8 | EDIÇÃO ÉLITE v2.1
  * Sistema de desenvolvimento pessoal de 60 dias
  * Início: 08 de Janeiro de 2026
  * Término: 08 de Março de 2026
@@ -1491,23 +1750,25 @@ const TODAY = new Date(); // Para desenvolvimento, pode ser alterado
 const VIDEO_IDS = [
     "kwt8lwpzgN0", "7AzBE0ydjXs", "AEhIdDWvMnA", "ZkYr5eMdtw0", "HmmLj_e_1WI",
     "pmtuStn43cM", "cGzoQJtu8UM", "Y-psrw-H9z4", "pzzFgnLC63Q", "50l9eIFt1j0",
-    "TpUVbtBUFi0", "tjaPK6W69xg", "jR3Xqo65B1s", "FjMDsZnwjyM", "g8KDYyA2O5Y",
+    "TpUVbtBUFi0", "tjaPK6W69xg", "jR3Xqo65B1s", "FjMDsZnwjyM", "g8KDyA2O5Y",
     "0JaoNsfvkqw", "tWDI3SZ2p3I", "Gl_gllXocCY", "BhDgWQAtQJ8", "34CHDUqMfzo",
     "qYkjRQipESY", "yli7CqINDQk", "6Ou1wJ9I0P0", "5mdaDON3fwk", "tG2ouccRXQ4",
     "qpumc2rTIxU", "j2SrFRlxQMk", "CD_nCLtUxeU", "qWaQB83Cj4o", "_MRBZD6WQHY",
     "LcI2vKgWfr0", "rKMm6gEleps"
 ];
 
-// Tarefas diárias base
+// Tarefas diárias base (10 tarefas agora)
 const TASKS_BASE = [
     { id: 'video_mission', text: 'Assistir Briefing Completo (Vídeo)', icon: 'fa-eye', type: 'video' },
-    { id: 'workout', text: 'Treino Físico (45 minutos mín.)', icon: 'fa-dumbbell', type: 'check' },
-    { id: 'read', text: 'Leitura (10 páginas mín.)', icon: 'fa-book-open', type: 'check' },
-    { id: 'water', text: 'Hidratação (3L de água)', icon: 'fa-glass-water', type: 'check' },
-    { id: 'diet', text: 'Dieta Limpa (Sem junk food)', icon: 'fa-apple-whole', type: 'check' },
-    { id: 'sleep', text: 'Sono de Qualidade (7h+)', icon: 'fa-bed', type: 'check' },
+    { id: 'workout', text: 'Treino Físico (15 minutos mín.)', icon: 'fa-dumbbell', type: 'check' },
+    { id: 'read', text: 'Leitura (30 minutos mín.)', icon: 'fa-book-open', type: 'check' },
+    { id: 'water', text: 'Hidratação (Tomar bastante água)', icon: 'fa-glass-water', type: 'check' },
+    { id: 'diet', text: 'Dieta Limpa (Comer bem)', icon: 'fa-apple-whole', type: 'check' },
+    { id: 'sleep', text: 'Sono de Qualidade (~9h)', icon: 'fa-bed', type: 'check' },
     { id: 'no_screen', text: 'Sem Telas 1h Antes de Dormir', icon: 'fa-mobile-screen-button', type: 'check' },
-    { id: 'meditation', text: 'Meditação/Reflexão (10 min)', icon: 'fa-brain', type: 'check' }
+    { id: 'meditation', text: 'Meditação/Reflexão (30 min)', icon: 'fa-brain', type: 'check' },
+    { id: 'no_lust', text: 'Passar o dia sem cair em luxúria', icon: 'fa-fire', type: 'check' },
+    { id: 'fruit', text: 'Comer uma fruta no dia', icon: 'fa-lemon', type: 'check' }
 ];
 
 // Frases motivacionais
@@ -1537,12 +1798,15 @@ class ProtocoloApp {
             currentStreak: 0,
             longestStreak: 0,
             cycleCount: 1,
-            quoteIndex: 0
+            quoteIndex: 0,
+            firstLogin: true,
+            settings: { showAnimations: true }
         };
         this.viewDate = new Date();
         this.devMode = false;
         this.devKeys = new Set();
         this.isLoading = true;
+        this.lastCompletedAll = false; // Para controlar animação de "tudo completo"
         
         this.init();
     }
@@ -1567,8 +1831,25 @@ class ProtocoloApp {
                 this.data = JSON.parse(saved); 
                 // Garantir compatibilidade com versões anteriores
                 if (!this.data.quoteIndex) this.data.quoteIndex = 0;
+                if (!this.data.currentStreak) this.data.currentStreak = 0;
+                if (!this.data.longestStreak) this.data.longestStreak = 0;
+                if (!this.data.cycleCount) this.data.cycleCount = 1;
+                if (!this.data.firstLogin) this.data.firstLogin = false;
+                if (!this.data.settings) this.data.settings = { showAnimations: true };
             } catch (e) { 
                 console.error('Erro ao carregar dados:', e); 
+                // Se der erro, resetar dados
+                this.data = {
+                    user: null,
+                    startDate: CYCLE_START.toISOString(),
+                    records: {},
+                    currentStreak: 0,
+                    longestStreak: 0,
+                    cycleCount: 1,
+                    quoteIndex: 0,
+                    firstLogin: true,
+                    settings: { showAnimations: true }
+                };
             }
         }
         
@@ -1591,10 +1872,14 @@ class ProtocoloApp {
         this.updateClock();
         setInterval(() => this.updateClock(), 1000);
         
-        // Verificar login
+        // Verificar login - se já tem usuário, vai direto para a aplicação
         if (this.data.user) {
+            this.data.firstLogin = false;
+            this.save();
             this.route();
         } else {
+            // Mostrar tela de login
+            document.getElementById('login-overlay').classList.add('active');
             document.getElementById('username-input').focus();
         }
     }
@@ -1609,6 +1894,7 @@ class ProtocoloApp {
         this.devMode = !this.devMode;
         document.body.classList.toggle('dev-mode-active', this.devMode);
         alert(this.devMode ? "MODO DESENVOLVEDOR ATIVADO: ACESSO TOTAL LIBERADO" : "MODO DESENVOLVEDOR DESATIVADO");
+        this.save();
         this.render();
     }
     
@@ -1626,7 +1912,8 @@ class ProtocoloApp {
         }
         
         this.data.user = val.toUpperCase();
-        this.save();
+        this.data.firstLogin = false;
+        this.save(); // SALVAR APÓS LOGIN
         
         // Animação de saída
         document.getElementById('login-overlay').style.opacity = '0';
@@ -1656,6 +1943,7 @@ class ProtocoloApp {
         
         // Atualizar streak
         this.updateStreak();
+        this.save();
     }
     
     getCycleEndDate() {
@@ -1666,7 +1954,13 @@ class ProtocoloApp {
     }
     
     save() {
-        localStorage.setItem(DB_KEY, JSON.stringify(this.data));
+        try {
+            localStorage.setItem(DB_KEY, JSON.stringify(this.data));
+            console.log('Dados salvos com sucesso:', this.data);
+        } catch (e) {
+            console.error('Erro ao salvar dados:', e);
+            alert('Erro ao salvar dados. Verifique o espaço disponível no navegador.');
+        }
     }
     
     getKey(date) {
@@ -1755,10 +2049,44 @@ class ProtocoloApp {
         
         this.data.currentStreak = currentStreak;
         this.data.longestStreak = longestStreak;
-        this.save();
         
         // Atualizar UI
         document.getElementById('user-streak').innerText = `Sequência: ${currentStreak} dia${currentStreak !== 1 ? 's' : ''}`;
+        
+        // Atualizar rank atual
+        this.updateCurrentRank();
+        
+        this.save();
+    }
+    
+    updateCurrentRank() {
+        const rankBadge = document.getElementById('daily-rank-badge');
+        const key = this.getKey(this.viewDate);
+        const record = this.data.records[key];
+        
+        if (record && this.isDayComplete(record)) {
+            rankBadge.style.display = 'block';
+            rankBadge.innerText = 'PERFEITO';
+            rankBadge.style.background = 'linear-gradient(135deg, var(--primary), #ffaa00)';
+        } else if (record) {
+            const completedTasks = Object.values(record.tasks).filter(v => v).length;
+            const totalTasks = TASKS_BASE.length;
+            const percent = Math.round((completedTasks / totalTasks) * 100);
+            
+            if (percent >= 70) {
+                rankBadge.style.display = 'block';
+                rankBadge.innerText = 'BOM';
+                rankBadge.style.background = 'linear-gradient(135deg, var(--accent), #0088cc)';
+            } else if (percent >= 50) {
+                rankBadge.style.display = 'block';
+                rankBadge.innerText = 'REGULAR';
+                rankBadge.style.background = 'linear-gradient(135deg, #aaaaaa, #666666)';
+            } else {
+                rankBadge.style.display = 'none';
+            }
+        } else {
+            rankBadge.style.display = 'none';
+        }
     }
     
     isDayComplete(record) {
@@ -1775,6 +2103,104 @@ class ProtocoloApp {
         return this.isDayComplete(record);
     }
     
+    // --- ANIMAÇÕES ---
+    
+    createTaskCompleteAnimation(element) {
+        if (!this.data.settings.showAnimations) return;
+        
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        // Criar partículas de brilho
+        for (let i = 0; i < 12; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            spark.style.left = centerX + 'px';
+            spark.style.top = centerY + 'px';
+            
+            const angle = (i / 12) * Math.PI * 2;
+            const distance = 50;
+            const targetX = centerX + Math.cos(angle) * distance;
+            const targetY = centerY + Math.sin(angle) * distance;
+            
+            spark.style.animation = `sparkle 0.6s forwards`;
+            document.body.appendChild(spark);
+            
+            // Remover após animação
+            setTimeout(() => {
+                if (spark.parentNode) {
+                    spark.parentNode.removeChild(spark);
+                }
+            }, 600);
+        }
+        
+        // Efeito de pulso no elemento
+        element.classList.add('pulse-complete');
+        setTimeout(() => {
+            element.classList.remove('pulse-complete');
+        }, 600);
+    }
+    
+    createFullDayCompleteAnimation() {
+        if (!this.data.settings.showAnimations) return;
+        
+        // Confetti
+        this.createConfetti();
+        
+        // Texto de celebração
+        const texts = document.querySelectorAll('.celebration-text');
+        texts.forEach((text, index) => {
+            text.style.animation = 'none';
+            text.style.opacity = '0';
+            setTimeout(() => {
+                text.style.animation = `fadeInUp 0.8s ${index * 0.5}s forwards, textGlow 2s ${index * 0.5}s infinite`;
+            }, 10);
+        });
+        
+        // Ativar animação
+        const animation = document.getElementById('full-complete-animation');
+        animation.classList.add('active');
+        
+        // Desativar após 5 segundos
+        setTimeout(() => {
+            animation.classList.remove('active');
+            texts.forEach(text => {
+                text.style.animation = 'none';
+                text.style.opacity = '0';
+            });
+        }, 5000);
+    }
+    
+    createConfetti() {
+        const container = document.getElementById('confetti-container');
+        container.innerHTML = '';
+        
+        for (let i = 0; i < 150; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            
+            // Posição aleatória no topo
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.width = Math.random() * 10 + 5 + 'px';
+            confetti.style.height = Math.random() * 10 + 5 + 'px';
+            
+            // Animação com parâmetros aleatórios
+            const duration = Math.random() * 3 + 2;
+            const delay = Math.random() * 2;
+            confetti.style.animation = `confettiFall ${duration}s ${delay}s linear forwards`;
+            
+            container.appendChild(confetti);
+            
+            // Remover após animação
+            setTimeout(() => {
+                if (confetti.parentNode) {
+                    confetti.parentNode.removeChild(confetti);
+                }
+            }, (duration + delay) * 1000);
+        }
+    }
+    
     // --- RENDERIZAÇÃO ---
     
     render() {
@@ -1786,6 +2212,7 @@ class ProtocoloApp {
         // Criar registro se não existir
         if (!this.data.records[key]) {
             this.data.records[key] = { tasks: {}, journal: "" };
+            this.save();
         }
         const record = this.data.records[key];
         
@@ -1810,6 +2237,21 @@ class ProtocoloApp {
             videoWidget.classList.add('completed');
         } else {
             videoWidget.classList.remove('completed');
+        }
+        
+        // Atualizar botão de vídeo mobile
+        const mobileVideoBtn = document.getElementById('mobile-video-button');
+        if (mobileVideoBtn) {
+            const btn = mobileVideoBtn.querySelector('button');
+            if (record.tasks['video_mission']) {
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> BRIEFING ASSISTIDO';
+                btn.style.background = 'linear-gradient(135deg, var(--success), #008855)';
+                btn.style.opacity = '0.8';
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-play"></i> ASSISTIR BRIEFING DO DIA';
+                btn.style.background = 'var(--gradient-gold)';
+                btn.style.opacity = '1';
+            }
         }
         
         // Renderizar tarefas
@@ -1858,7 +2300,7 @@ class ProtocoloApp {
                 if (task.type === 'video') {
                     el.onclick = () => this.openVideo();
                 } else {
-                    el.onclick = () => this.toggleTask(key, task.id);
+                    el.onclick = () => this.toggleTask(key, task.id, el);
                 }
             } else {
                 el.onclick = null;
@@ -1871,6 +2313,21 @@ class ProtocoloApp {
         const percent = Math.round((completedCount / TASKS_BASE.length) * 100);
         document.getElementById('daily-percent').innerText = `${percent}%`;
         document.getElementById('progress-fill').style.width = `${percent}%`;
+        
+        // Verificar se completou todas as tarefas (para animação especial)
+        if (completedCount === TASKS_BASE.length && !this.lastCompletedAll && this.data.settings.showAnimations) {
+            this.lastCompletedAll = true;
+            this.createFullDayCompleteAnimation();
+            
+            // Efeito especial na barra de progresso
+            const progressContainer = document.getElementById('progress-container');
+            progressContainer.style.animation = 'progressComplete 1.5s';
+            setTimeout(() => {
+                progressContainer.style.animation = '';
+            }, 1500);
+        } else if (completedCount < TASKS_BASE.length) {
+            this.lastCompletedAll = false;
+        }
         
         // Diário
         const jInput = document.getElementById('journal-input');
@@ -1885,6 +2342,9 @@ class ProtocoloApp {
         
         // Atualizar frase do dia
         this.updateQuote();
+        
+        // Atualizar rank atual
+        this.updateCurrentRank();
     }
     
     renderCalendar() {
@@ -1976,9 +2436,16 @@ class ProtocoloApp {
     
     // --- AÇÕES ---
     
-    toggleTask(key, taskId) {
+    toggleTask(key, taskId, element) {
         const rec = this.data.records[key];
-        rec.tasks[taskId] = !rec.tasks[taskId];
+        const oldValue = rec.tasks[taskId] || false;
+        rec.tasks[taskId] = !oldValue;
+        
+        // Se marcou como completo, criar animação
+        if (!oldValue && rec.tasks[taskId]) {
+            this.createTaskCompleteAnimation(element);
+        }
+        
         this.save();
         this.updateStreak();
         this.render();
@@ -2019,6 +2486,15 @@ class ProtocoloApp {
         
         // Desabilitar scroll do body
         document.body.style.overflow = 'hidden';
+        
+        // Em mobile, garantir que o vídeo carregue corretamente
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                const iframe = document.getElementById('main-video-frame');
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+            }, 100);
+        }
     }
     
     closeVideo() {
@@ -2030,6 +2506,60 @@ class ProtocoloApp {
         
         // Reabilitar scroll
         document.body.style.overflow = '';
+        
+        // Em mobile, rolar para o topo do botão de vídeo
+        if (window.innerWidth <= 768) {
+            const mobileBtn = document.getElementById('mobile-video-button');
+            if (mobileBtn) {
+                setTimeout(() => {
+                    mobileBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 500);
+            }
+        }
+    }
+    
+    // --- EXPORTAÇÃO DE DADOS ---
+    
+    exportData() {
+        // Criar objeto com todos os dados
+        const exportData = {
+            version: "2.1",
+            exportDate: new Date().toISOString(),
+            user: this.data.user,
+            cycleStart: this.data.startDate,
+            cycleCount: this.data.cycleCount,
+            currentStreak: this.data.currentStreak,
+            longestStreak: this.data.longestStreak,
+            records: this.data.records,
+            settings: this.data.settings
+        };
+        
+        // Converter para JSON
+        const jsonString = JSON.stringify(exportData, null, 2);
+        
+        // Criar blob e link para download
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `protocolo_8_8_${this.data.user || 'dados'}_${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        // Feedback visual
+        const exportBtn = event.target.closest('button');
+        if (exportBtn) {
+            const originalText = exportBtn.innerHTML;
+            exportBtn.innerHTML = '<i class="fa-solid fa-check"></i> EXPORTADO!';
+            exportBtn.style.background = 'linear-gradient(135deg, var(--success), #008855)';
+            
+            setTimeout(() => {
+                exportBtn.innerHTML = originalText;
+                exportBtn.style.background = 'linear-gradient(135deg, #00cc88, #009966)';
+            }, 2000);
+        }
     }
     
     // --- FIM DE CICLO E RESUMO ---
@@ -2091,8 +2621,8 @@ class ProtocoloApp {
         const newStart = new Date('2026-03-08T00:00:00');
         this.data.startDate = newStart.toISOString();
         this.data.cycleCount++;
-        // Manter registros antigos para histórico (opcional)
-        // this.data.records = {};
+        // Limpar registros para novo ciclo
+        this.data.records = {};
         this.data.currentStreak = 0;
         this.save();
         
@@ -2109,35 +2639,65 @@ class ProtocoloApp {
         }
     }
     
-    // --- FUNÇÕES ADICIONAIS (placeholders) ---
+    // --- FUNÇÕES ADICIONAIS ---
     
     showStats() {
-        alert("Estatísticas detalhadas estarão disponíveis na próxima atualização!");
+        // Calcular estatísticas básicas
+        let totalDays = 0;
+        let totalTasks = 0;
+        let perfectDays = 0;
+        
+        Object.entries(this.data.records).forEach(([date, rec]) => {
+            totalDays++;
+            const completedTasks = Object.values(rec.tasks).filter(v => v).length;
+            totalTasks += completedTasks;
+            
+            if (completedTasks === TASKS_BASE.length) {
+                perfectDays++;
+            }
+        });
+        
+        const statsMessage = `
+ESTATÍSTICAS DO PROTOCOLO:
+
+• Dias registrados: ${totalDays} de ${CYCLE_LENGTH}
+• Tarefas completadas: ${totalTasks}
+• Dias perfeitos: ${perfectDays}
+• Sequência atual: ${this.data.currentStreak} dias
+• Melhor sequência: ${this.data.longestStreak} dias
+• Taxa de conclusão: ${totalDays > 0 ? Math.round((totalTasks / (totalDays * TASKS_BASE.length)) * 100) : 0}%
+
+Continue focado na missão!
+        `;
+        
+        alert(statsMessage);
         document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
     }
     
     showCalendarFull() {
-        alert("Calendário completo com visualização de todo o ciclo estará disponível na próxima atualização!");
+        alert("Calendário completo com visualização de todo o ciclo está disponível no painel direito. Use-o para navegar entre os dias e ver seu progresso!");
         document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
         event.target.classList.add('active');
     }
     
     showInstructions() {
         const instructions = `
-PROTOCOLO 8-8 - MANUAL DO OPERADOR
+PROTOCOLO 8-8 v2.1 - MANUAL DO OPERADOR
 
 1. O desafio começa em 08 de Janeiro e termina em 08 de Março (60 dias).
 
-2. Você deve completar as 8 tarefas diárias:
+2. Você deve completar as 10 tarefas diárias:
    • Assistir ao briefing em vídeo
-   • Treino físico (45min)
-   • Leitura (10 páginas)
-   • Hidratação (3L de água)
-   • Dieta limpa (sem junk food)
-   • Sono de qualidade (7h+)
+   • Treino físico (15 min)
+   • Leitura (30 min)
+   • Hidratação (Água necessária)
+   • Dieta limpa (Comer bem)
+   • Sono de qualidade (~9h)
    • Sem telas 1h antes de dormir
-   • Meditação/reflexão (10min)
+   • Meditação/reflexão (30min)
+   • Passar o dia sem cair em luxúria
+   • Comer uma fruta no dia
 
 3. Você só pode marcar tarefas do dia atual e do dia anterior.
 
@@ -2148,6 +2708,8 @@ PROTOCOLO 8-8 - MANUAL DO OPERADOR
 6. Mantenha um diário para registrar insights e progresso.
 
 7. Complete o ciclo para receber sua classificação final.
+
+8. Use o botão "Exportar Dados" para fazer backup do seu progresso.
 
 FORJA SEU CARÁTER. CONSTRUA SUA DISCIPLINA.
         `;
